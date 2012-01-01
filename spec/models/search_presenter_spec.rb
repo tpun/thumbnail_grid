@@ -5,9 +5,9 @@ require_relative '../../models/searcher.rb'
 describe "SearchPresenter" do
   let(:query) { "blah"}
 
-  let(:item1) { Thumbnail.new "", 500, 100 }
-  let(:item2) { Thumbnail.new "", 400, 200 }
-  let(:item3) { Thumbnail.new "", 200, 100 }
+  let(:item1) { Thumbnail.new stub, 500, 100 }
+  let(:item2) { Thumbnail.new stub, 400, 200 }
+  let(:item3) { Thumbnail.new stub, 200, 100 }
   let(:search_results) { [item1, item2, item3] }
 
   let(:searcher) { Searcher.new(query).tap do |searcher|
