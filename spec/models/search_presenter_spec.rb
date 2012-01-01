@@ -25,6 +25,13 @@ describe "SearchPresenter" do
     it "resizes one of the items which minimizes change in the row's height" do
       subject.items_per_row.should == [item1_adjusted, item2]
     end
+
+    it "does not resize last row" do
+      subject.items_per_row
+
+      expect { subject.items_per_row }.
+        to_not change { [item3.width, item3.height] }
+    end
   end
 
   describe "#write_thumbnail_grid_html" do
