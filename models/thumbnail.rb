@@ -6,14 +6,15 @@ class Thumbnail
     @height = height
   end
 
-  def new_height to_width
+  def new_height width_adjustment
+    to_width = width_adjustment + @width
     Integer (@height * to_width / @width.to_f)
   end
 
-  def resize! to_width
+  def resize! width_adjustment
     # This is smelly since we could introduce bug if we swap
     # the order of these two lines.
-    @height = new_height to_width
-    @width = to_width
+    @height = new_height width_adjustment
+    @width += width_adjustment
   end
 end

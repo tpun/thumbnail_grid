@@ -7,7 +7,7 @@ describe "Thumbnail" do
 
   describe "#new_height" do
     it "returns new height if thumbnail is to be resized to given width" do
-      subject.new_height(new_dim.width).should == new_dim.height
+      subject.new_height(new_dim.width-old_dim.width).should == new_dim.height
     end
 
     it "does not change @width" do
@@ -18,7 +18,7 @@ describe "Thumbnail" do
 
   describe "#resize!" do
     it "resizes by given width" do
-      expect { subject.resize! new_dim.width }.
+      expect { subject.resize! new_dim.width-old_dim.width }.
         to change { [subject.width, subject.height] }.
         from([old_dim.width, old_dim.height]).
         to([new_dim.width, new_dim.height])
