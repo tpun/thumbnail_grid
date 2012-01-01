@@ -15,14 +15,14 @@ class SearchPresenter
         current_width += items.last.width
       end
 
-      # Pick the thumbnail which results in minimum new height change
-      # adjustment = @fixed_width - current_width
-      # if !search_results.empty? and adjustment>0
-      #   resized_heights = items.map {|item| item.new_height adjustment }
-      #   index_min_resized_height = resized_height.index resized_heights.min
-      #   to_adjust = items[index_min_resized_height]
-      #   to_adjust.resize! adjustment
-      # end
+      # Pick the thumbnail which results in minimum total row height change
+      adjustment = @fixed_width - current_width
+      if !search_results.empty? and adjustment > 0
+        resized_heights = items.map {|item| item.new_height adjustment }
+        index_min_row_height_change = resized_heights.index resized_heights.min
+
+        items[index_min_row_height_change].resize! adjustment
+      end
     end
   end
 

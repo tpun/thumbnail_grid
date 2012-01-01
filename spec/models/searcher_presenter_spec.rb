@@ -1,14 +1,15 @@
 require_relative '../../models/search_presenter.rb'
+require_relative '../../models/thumbnail.rb'
 
 describe "SearchPresenter" do
-  let(:searcher) { Searcher.new stub }
+  let(:searcher) { stub }
   let(:fixed_width) { 1000 }
   subject { SearchPresenter.new  searcher, fixed_width }
 
   describe "#items_per_row" do
-    let(:item1) { stub :width=>500, :height=>100 }
-    let(:item2) { stub :width=>400, :height=>200 }
-    let(:item3) { stub :width=>200, :height=>100 }
+    let(:item1) { Thumbnail.new stub, 500, 100 }
+    let(:item2) { Thumbnail.new stub, 400, 200 }
+    let(:item3) { Thumbnail.new stub, 200, 100 }
     before :each do
       searcher.stub :results => [item1, item2, item3]
     end
@@ -17,9 +18,9 @@ describe "SearchPresenter" do
       subject.items_per_row.should == [item1, item2]
     end
 
-    let(:item1_adjust) { stub :width => 600, :height => 100*600/500 }
+    let(:item1_adjusted) { item1.tap {|item| item.resize!(
+                            fixed_width-(item1.width+item2.width)) } }
     it "resizes one of the items which minimizes change in the row's height" do
-      pending
       subject.items_per_row.should == [item1_adjusted, item2]
     end
   end
