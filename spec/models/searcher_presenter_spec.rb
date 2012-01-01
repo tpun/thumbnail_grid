@@ -1,10 +1,12 @@
 require_relative '../../models/search_presenter.rb'
 require_relative '../../models/thumbnail.rb'
+require_relative '../../models/searcher.rb'
 
 describe "SearchPresenter" do
-  let(:searcher) { stub }
+  let(:query) { "blah"}
+  let(:searcher) { Searcher.new query }
   let(:fixed_width) { 1000 }
-  subject { SearchPresenter.new  searcher, fixed_width }
+  subject { SearchPresenter.new searcher, fixed_width }
 
   describe "#items_per_row" do
     let(:item1) { Thumbnail.new stub, 500, 100 }
@@ -25,7 +27,16 @@ describe "SearchPresenter" do
     end
   end
 
-  describe "#write_thumbnail_grid" do
-    it "creates a file"
+  describe "#write_thumbnail_grid_html" do
+    let(:filename) { "./write_thumbnail_grid_html.html"}
+    before :each do
+      File.delete filename if File.exist? filename
+    end
+    it "creates a file" do
+      expect { subject.write_thumbnail_grid_html filename }.
+        to change { File.exist? filename }.
+        from(false).to(true)
+      File.delete filename if File.exist? filename
+    end
   end
 end

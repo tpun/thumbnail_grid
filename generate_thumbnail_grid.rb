@@ -7,4 +7,4 @@ query = ARGV.first
 presenter = SearchPresenter.new(
   :searcher => Searcher.new(query),
   :fixed_width => 800)
-presenter.write_thumbnail_grid default_output
+presenter.write_thumbnail_grid_html default_output
